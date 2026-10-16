@@ -1,0 +1,81 @@
+# page.yaml: the words on your page, kept as data like everything else.
+# make_page.py puts each answer under its question. A few sentences each, in your own words;
+# leave a blank line between paragraphs. Refer to YOUR network and YOUR evidence.
+# Never put your name or full student ID here: the page is public.
+
+repository: "https://github.com/ChristineLeow04/wic2005-netlab"
+
+answers:
+  planes:
+    question: "Where are the data, control and management planes in your network?"
+    answer: >-
+      In my network, the data plane consists of three Linux bridge
+      switches (s1, s2 and s3) that forward Ethernet frames between
+      six hosts. The control plane handles MAC address learning within
+      the bridges without a separate SDN controller. The management
+      plane uses topology.yaml and build_topo.py to describe, validate
+      and build the network automatically.
+  learning:
+    question: "How did your switches learn which port leads to each host? Use your MAC table evidence."
+    answer: >-
+      My switches learned MAC addresses automatically by examining
+      the source MAC address of incoming Ethernet frames.
+      In the MAC table of s1, h1 was learned on port 1 and h2
+      on port 2. The addresses of h3 to h6 were learned on
+      port 3 because those hosts are connected through s2.
+      This demonstrates how a switch learns where to forward
+      frames without manual configuration.
+  kind:
+    question: "Which of the four kinds of programmability is this assignment (a network described as data, then built and documented by scripts)? Why isn't it any of the other three?"
+    answer: >-
+      My assignment mainly demonstrates automated configuration management.
+      I described my network in topology.yaml and used Python scripts to
+      validate, build and document it automatically. It is not programmable
+      data plane technology because I did not change how switches process
+      packets. It is not an externalised control plane because I did not
+      use a separate SDN controller. It is also not programmatic device
+      interfaces because I did not configure devices through APIs.
+  two_am:
+    question: "Week 1's 2 a.m. change on 40 switches: what would be different if those switches were described like your network?"
+    answer: >-
+      If the 40 switches were described as structured data like my network,
+      the administrator could update a central configuration file instead
+      of manually configuring each switch. A script could validate the
+      changes and automate their deployment using suitable device interfaces.
+      This would reduce repetitive work, improve consistency and lower
+      the risk of human errors. Git could also track changes and help
+      restore a previous configuration if something went wrong.
+  model:
+    question: "What's the difference between your network's data model and its serialisation? Use YAML and JSON as the example."
+    answer: >-
+      The data model describes the structure of my network, including
+      its hosts, switches, IP addresses and links. Serialisation refers
+      to how this information is represented in a file. In my lab, I
+      converted topology.yaml into topology.json and successfully built
+      the same network using both files. YAML is generally more readable
+      and supports comments, while JSON uses braces and brackets and
+      does not support comments. Although the formats are different,
+      the underlying network data model remains the same.
+  check:
+    question: "Why is it better to catch bad data in check() than with pingall? What did IPv6 notice about a duplicate address that IPv4 didn't?"
+    answer: >-
+      Checking network data before building is better because it can
+      detect configuration errors early and prevent unreliable networks.
+      During my lab, duplicate IP addresses caused only one failed ping
+      out of twelve, making the network appear mostly functional.
+      My check() function detected duplicate IPv4 and IPv6 addresses
+      and invalid links before Mininet started. I also observed that
+      IPv6 Duplicate Address Detection marked a conflicting address
+      as dadfailed, while IPv4 accepted the duplicate secondary address
+      without an equivalent automatic detection mechanism.
+  git:
+    question: "What does your Git history give you that copying files into folders named topology-v2-final wouldn't?"
+    answer: >-
+      Git provides a clear history of changes through commits, allowing
+      me to track what was modified and when. For example, my Git history
+      records the addition of new switches and hosts, duplicate IP
+      address validation, and network testing evidence. Using git diff,
+      I can compare changes between versions, identify mistakes and
+      restore earlier working versions if needed. This is more organized
+      and reliable than creating multiple folders with names such as
+      topology-v2-final, where the differences may be unclear.
