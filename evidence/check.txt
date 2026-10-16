@@ -1,0 +1,4 @@
+PROBLEM: h6 and h2 both use 10.65.0.2
+PROBLEM: h6 and h2 both use fd00:4965::2
+PROBLEM: link references unknown node s9
+Fix the description and try again.

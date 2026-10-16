@@ -72,6 +72,13 @@ def check(spec):
                 )
             else:
                 seen[address] = host["name"]
+    valid_nodes = set(spec["switches"])
+    valid_nodes.update(host["name"] for host in spec["hosts"])
+
+    for link in spec["links"]:
+        for node in link:
+            if node not in valid_nodes:
+                problems.append(f"link references unknown node {node}")
     return problems
 
 
