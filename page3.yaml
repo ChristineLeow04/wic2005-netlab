@@ -1,0 +1,29 @@
+# page3.yaml: the words on your Week 3 page. make_page3.py puts each answer under its question.
+# A few sentences each, in your own words, about YOUR network and YOUR evidence.
+# Leave a blank line between paragraphs. Never put your name or full student ID here.
+
+repository: https://github.com/ChristineLeow04/wic2005-netlab
+
+answers:
+  design:
+    question: "Describe your design: why these routers, LANs and links, and how you chose the addresses."
+    answer: |
+      I designed a network with four routers connected in a ring, with one host on each router's LAN. I chose this layout because it provides two possible physical paths between routers, instead of relying on just one connection. I used my assigned 10.65.0.0/16 address block and gave each LAN a separate /24 network. The router-to-router links use /30 networks because each link only needs two usable IP addresses.
+
+  summary:
+    question: "Which route summarises several LANs? Which networks does it cover, why is it correct, and what else would it attract if you added a network inside its range?"
+    answer: |
+      I used 10.65.32.0/23 as a summary route on r1 and r2. It covers both 10.65.32.0/24 (h3's LAN) and 10.65.33.0/24 (h4's LAN), since these two networks are consecutive and can be combined into one /23 prefix. My summary.txt evidence shows that r1 forwards traffic to both hosts through the same next hop, 10.65.14.1. This /23 covers exactly those two /24 address ranges, so it would also attract traffic for any additional addresses or smaller subnets placed within them, even if those destinations were not actually reachable.
+
+
+  failure:
+    question: "When you took a link down, what happened, and why couldn't your routes recover even though another path existed? What would have recovered?"
+    answer: |
+      I disconnected the link between r1 and r4 to simulate a network failure. After that, traceroute from h1 to h3 showed !N (Network Unreachable), and r1 reported that the destination was unreachable. Although the ring still had another path through r2 and r3, my network used static routes, so it could not automatically switch to that path. A dynamic routing protocol such as OSPF could detect the topology change and calculate an alternative route.
+
+
+  control_plane:
+    question: "In your network, what was the control plane? Who worked out the routes, and what does that mean for a network of 40 routers?"
+    answer: |
+      In my network, I acted as the control plane by designing the routes in network.yaml. The Python script checked the configuration and applied the static routes to the Linux routers, while the routers' data plane forwarded packets using their routing tables. For a network with 40 routers, configuring everything manually would take more time and make errors harder to find. Using a shared data file, automated checks and configuration scripts would make managing the network more consistent and reliable.
+  
