@@ -1,0 +1,65 @@
+# page6.yaml: the words on your Week 6 page. make_page6.py puts each answer under its question.
+# A few sentences each, in your own words, about YOUR overlay and YOUR evidence.
+# Leave a blank line between paragraphs. Don't put your name or your full student ID in this file.
+
+repository: https://github.com/ChristineLeow04/wic2005-netlab
+
+answers:
+  design:
+    question: "Describe your design: hypervisors, tenants, VNIs and addresses. Which tenants overlap, and why did you place each VM where you did?"
+
+    answer: |
+      I designed a small multi-tenant data centre with three hypervisors connected through an underlay network of 10.65.0.0/24. The hypervisors are hv1 (10.65.0.1), hv2 (10.65.0.2), and hv3 (10.65.0.3).
+
+      There are two tenants: Sales (VNI 165) and HR (VNI 265). Both use the same IP network, 10.65.60.0/24, so their VM addresses overlap. Sales has three VMs: sales1 on hv1, sales2 on hv2, and sales3 on hv3. HR has two VMs: hr1 on hv1 and hr2 on hv3.
+
+      I placed Sales across all three hypervisors to demonstrate multi-endpoint VXLAN flooding and MAC learning. HR spans two hypervisors to test communication between its VMs. By placing both Sales and HR on hv1 and hv3, I can demonstrate how different VNIs keep the tenants isolated even when they share physical infrastructure and IP addresses.
+
+  isolation:
+    question: "Two of your VMs have the same IP address. Using your evidence, explain how a ping reaches the right one — and what would have to go wrong for one tenant to see another's traffic."
+  
+    answer: |
+      My Sales and HR tenants both use 10.65.60.0/24, so sales2 and hr2 share the IP address 10.65.60.11. However, Sales uses VNI 165 and HR uses VNI 265. Each VNI has its own VXLAN interface and Linux bridge, which keeps the two tenants in separate Layer 2 networks.
+
+      In my isolation test, sales1 successfully pinged 10.65.60.11 and learned the MAC address 02:00:00:a5:00:0b, belonging to sales2. Meanwhile, hr1 learned 02:00:01:09:00:0b for the same IP address, belonging to hr2. Both tenants could communicate with their respective VMs without IP address conflicts.
+
+      I also captured traffic on hr2 while sales1 sent three ping requests to sales2. The capture recorded zero packets, supporting that Sales traffic did not enter the HR network during the test.
+
+      Tenant isolation could fail if the VXLAN interfaces were configured with incorrect VNIs, VM ports were connected to the wrong tenant bridges, or forwarding rules accidentally mixed traffic between tenants. Therefore, correct VNI assignments and bridge configurations are essential for maintaining isolation.
+
+  flood_learn:
+    question: "Using your evidence, explain what was flooded, to which hypervisors, and what each VTEP learned. With 50 hypervisors in one VNI, how many copies would one broadcast need — and how would EVPN change that?"
+  
+    answer: |
+      In my Sales tenant (VNI 165), sales1 on hv1 needed to discover the MAC address of sales2 on hv2. Before communication, hv1's VXLAN forwarding database contained flood entries for the remote VTEPs at 10.65.0.2 (hv2) and 10.65.0.3 (hv3). Since ARP is a broadcast, hv1 replicated the ARP request to both hypervisors.
+
+      My tcpdump capture on hv3 confirmed that it received a VXLAN packet with VNI 165 containing an ARP request for 10.65.60.11. After communication, hv1 learned that sales2's MAC address, 02:00:00:a5:00:0b, was reachable through hv2 at 10.65.0.2. Meanwhile, hv3 learned that sales1's MAC address, 02:00:00:a5:00:0a, was reachable through hv1 at 10.65.0.1.
+
+      If 50 hypervisors belonged to the same VNI, one broadcast originating from a hypervisor would require 49 replicated copies, one for every other VTEP. This creates additional traffic as the network grows.
+
+      EVPN could replace data-plane MAC learning with control-plane MAC and VTEP advertisements, commonly using BGP EVPN. VTEPs would learn remote MAC locations through routing information rather than waiting to discover them from incoming traffic. EVPN can also reduce unnecessary ARP flooding through ARP suppression, although some broadcast and unknown traffic handling may still be required.
+
+  mtu:
+    question: "Compare your two MTU fixes using your measurements. Which would you choose for a data centre, what does each cost, and who has to change what?"
+
+    answer: |
+      My original black-hole configuration used a tenant MTU of 1500 and an underlay MTU of 1500. With the additional 50-byte VXLAN overhead, a full-sized tenant packet required 1550 bytes on the underlay. In my experiment, a 1422-byte ICMP payload succeeded, but a 1423-byte payload failed. The large 1472-byte ping also experienced 100% packet loss, while iperf3 reported 0 bits/sec of TCP throughput.
+
+      Fix A reduced both tenants' MTUs to 1450 while keeping the underlay MTU at 1500. A 1422-byte ping succeeded, and a 1423-byte ping produced a local "message too long, mtu=1450" error. TCP throughput recovered to 4.01 Gbits/sec. This solution only requires changes to the tenant-side MTU settings, but it reduces the maximum inner packet size and adds some packet-processing overhead for the same amount of application data.
+
+      Fix B increased the underlay MTU to 9000 while keeping the tenants at 1500. A 1472-byte ping succeeded, while a 1473-byte ping was rejected locally because it exceeded the tenant MTU. TCP throughput reached 4.04 Gbits/sec. This preserves the normal 1500-byte tenant MTU, but requires all relevant underlay links, interfaces and switches to support and be configured for jumbo frames.
+
+      For this data centre, I would choose Fix A because it is simpler to deploy without changing the physical underlay infrastructure. Fix B is a good option when jumbo-frame support is already available across the network. The throughput difference between 4.01 and 4.04 Gbits/sec was small in my five-second tests, so it is not enough to prove that one solution is generally faster.
+
+  p4:
+    question: "If your hypervisors' VTEPs were P4 switches running the lecture's vtep.p4, what would have to fill the vtep_encap table, and how? What would replace flood-and-learn?"
+    
+    answer: |
+      If the hypervisors used P4 switches running the lecture's vtep.p4, the vtep_encap table would need forwarding entries that map tenant traffic to the correct remote VTEP. These entries would provide the destination information needed to encapsulate a tenant packet into VXLAN, including the correct VNI and remote underlay destination.
+
+      For my Sales tenant, traffic destined for sales2 should be encapsulated using VNI 165 and forwarded to hv2 at 10.65.0.2. Traffic destined for sales3 should use the same VNI but be forwarded to hv3 at 10.65.0.3. HR would require separate forwarding entries for VNI 265 so that its traffic remains isolated from Sales, even though their IP addresses overlap.
+
+      A control-plane application could discover the tenant topology from VM registration or orchestration information and install the required table entries through the P4Runtime interface. Instead of relying on flood-and-learn for remote destination discovery, the controller would distribute the MAC-to-VTEP mappings directly. A BGP EVPN control plane could also provide endpoint reachability information for the controller to translate into table entries.
+
+      This approach gives the controller explicit control over forwarding behaviour and can reduce unnecessary unknown-unicast flooding. However, it also requires the controller to keep the table entries updated whenever VMs are added, removed or moved between hypervisors.
+

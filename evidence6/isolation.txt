@@ -1,0 +1,27 @@
+PING 10.65.60.11 (10.65.60.11) 56(84) bytes of data.
+64 bytes from 10.65.60.11: icmp_seq=1 ttl=64 time=0.178 ms
+64 bytes from 10.65.60.11: icmp_seq=2 ttl=64 time=0.260 ms
+64 bytes from 10.65.60.11: icmp_seq=3 ttl=64 time=0.129 ms
+
+--- 10.65.60.11 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 0.129/0.189/0.260/0.054 ms
+== captured on hr2 during Sales ping
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on hr2-eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+
+0 packets captured
+0 packets received by filter
+0 packets dropped by kernel
+== Sales neighbour table
+10.65.60.11 dev sales1-eth0 lladdr 02:00:00:a5:00:0b STALE 
+== HR neighbour table
+PING 10.65.60.11 (10.65.60.11) 56(84) bytes of data.
+64 bytes from 10.65.60.11: icmp_seq=1 ttl=64 time=0.323 ms
+64 bytes from 10.65.60.11: icmp_seq=2 ttl=64 time=0.182 ms
+
+--- 10.65.60.11 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.182/0.252/0.323/0.070 ms
+== HR neighbour table after refresh
+10.65.60.11 dev hr1-eth0 lladdr 02:00:01:09:00:0b REACHABLE 
