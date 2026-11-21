@@ -1,0 +1,176 @@
+WIC2005 Week 7 - API Synchronization
+Student ID suffix: 4965
+VLANs in intent: 6
+ACL entries in intent: 5
+Dry-run mode: False
+
+Reading current API configuration...
+logged in as netops
+Found 7 existing VLANs
+Found 5 existing ACL entries
+
+Current VLANs:
+  VLAN 1: default
+  VLAN 10: students
+  VLAN 20: servers
+  VLAN 30: guests
+  VLAN 40: lecturers
+  VLAN 50: admin
+  VLAN 60: research
+
+Current ACL entries:
+  ACL 1: deny - guests-no-ssh
+  ACL 2: permit - students-https
+  ACL 3: permit - lecturers-ssh
+  ACL 4: deny - guests-no-rdp
+  ACL 5: permit - research-https
+
+Synchronization plan:
+  No changes needed. API already matches intent.
+
+Total planned changes: 0
+
+Applying synchronization plan...
+All planned operations processed.
+
+Verifying final API state...
+
+Reading current API configuration...
+Found 7 existing VLANs
+Found 5 existing ACL entries
+SUCCESS: API matches intent. No changes remaining.
+WIC2005 Week 7 - API Synchronization
+Student ID suffix: 4965
+VLANs in intent: 6
+ACL entries in intent: 5
+Dry-run mode: False
+
+Reading current API configuration...
+logged in as netops
+Found 7 existing VLANs
+Found 5 existing ACL entries
+
+Current VLANs:
+  VLAN 1: default
+  VLAN 10: students
+  VLAN 20: servers
+  VLAN 30: guests
+  VLAN 40: lecturers
+  VLAN 50: admin
+  VLAN 60: research
+
+Current ACL entries:
+  ACL 1: deny - guests-no-ssh
+  ACL 2: permit - students-https
+  ACL 3: permit - lecturers-ssh
+  ACL 4: deny - guests-no-rdp
+  ACL 5: permit - research-https
+
+Synchronization plan:
+  No changes needed. API already matches intent.
+
+Total planned changes: 0
+
+Applying synchronization plan...
+All planned operations processed.
+
+Verifying final API state...
+
+Reading current API configuration...
+Found 7 existing VLANs
+Found 5 existing ACL entries
+SUCCESS: API matches intent. No changes remaining.
+===== AUDIT AFTER SECOND RUN =====
+{
+  "writes": 11,
+  "items": [
+    {
+      "seq": 1,
+      "time": "15:36:16",
+      "method": "PUT",
+      "path": "/api/v1/vlans/10",
+      "status": 200,
+      "change": "set VLAN 10 students"
+    },
+    {
+      "seq": 2,
+      "time": "15:36:16",
+      "method": "PUT",
+      "path": "/api/v1/vlans/30",
+      "status": 201,
+      "change": "created VLAN 30 guests"
+    },
+    {
+      "seq": 3,
+      "time": "15:36:16",
+      "method": "PUT",
+      "path": "/api/v1/vlans/40",
+      "status": 201,
+      "change": "created VLAN 40 lecturers"
+    },
+    {
+      "seq": 4,
+      "time": "15:36:17",
+      "method": "PUT",
+      "path": "/api/v1/vlans/50",
+      "status": 201,
+      "change": "created VLAN 50 admin"
+    },
+    {
+      "seq": 5,
+      "time": "15:36:40",
+      "method": "PUT",
+      "path": "/api/v1/vlans/60",
+      "status": 201,
+      "change": "created VLAN 60 research"
+    },
+    {
+      "seq": 6,
+      "time": "15:36:40",
+      "method": "DELETE",
+      "path": "/api/v1/vlans/99",
+      "status": 204,
+      "change": "deleted VLAN 99"
+    },
+    {
+      "seq": 7,
+      "time": "15:36:41",
+      "method": "POST",
+      "path": "/api/v1/acl/entries",
+      "status": 201,
+      "change": "added ACL entry 1: deny 10.65.30.0/24 \u2192 10.65.20.0/24 tcp/22"
+    },
+    {
+      "seq": 8,
+      "time": "15:36:41",
+      "method": "POST",
+      "path": "/api/v1/acl/entries",
+      "status": 201,
+      "change": "added ACL entry 2: permit 10.65.10.0/24 \u2192 10.65.20.0/24 tcp/443"
+    },
+    {
+      "seq": 9,
+      "time": "15:36:43",
+      "method": "POST",
+      "path": "/api/v1/acl/entries",
+      "status": 201,
+      "change": "added ACL entry 3: permit 10.65.40.0/24 \u2192 10.65.20.0/24 tcp/22"
+    },
+    {
+      "seq": 10,
+      "time": "15:36:44",
+      "method": "POST",
+      "path": "/api/v1/acl/entries",
+      "status": 201,
+      "change": "added ACL entry 4: deny 10.65.30.0/24 \u2192 10.65.50.0/24 tcp/3389"
+    },
+    {
+      "seq": 11,
+      "time": "15:36:47",
+      "method": "POST",
+      "path": "/api/v1/acl/entries",
+      "status": 201,
+      "change": "added ACL entry 5: permit 10.65.60.0/24 \u2192 10.65.20.0/24 tcp/443"
+    }
+  ]
+}

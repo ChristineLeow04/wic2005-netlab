@@ -1,0 +1,17 @@
+logged in as netops
+Server unavailable (503). Retrying in 1.18s
+Server unavailable (503). Retrying in 1.27s
+Server unavailable (503). Retrying in 1.29s
+Rate limited (429). Waiting 1.0s
+Server unavailable (503). Retrying in 1.43s
+Rate limited (429). Waiting 1.0s
+Server unavailable (503). Retrying in 1.43s
+Rate limited (429). Waiting 1.0s
+Server unavailable (503). Retrying in 1.42s
+Server unavailable (503). Retrying in 1.41s
+Server unavailable (503). Retrying in 2.04s
+265 devices read (the API says 265), in 38 requests; saved devices.json
+  johor: 66
+  kl-hq: 67
+  penang: 66
+  pj-dc: 66

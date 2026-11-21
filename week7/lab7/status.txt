@@ -1,0 +1,269 @@
+HTTP/1.1 404 Not Found
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:39:32 GMT
+Content-Type: application/json
+Content-Length: 35
+
+{
+  "error": "VLAN 77 not found"
+}
+
+===== HTTP 405 Method Not Allowed =====
+HTTP/1.1 405 Method Not Allowed
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:40:16 GMT
+Content-Type: application/json
+Content-Length: 54
+Allow: GET, PUT, PATCH, DELETE
+
+{
+  "error": "POST is not allowed on a single VLAN"
+}
+
+===== HTTP 400 Bad Request =====
+HTTP/1.1 400 Bad Request
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:40:59 GMT
+Content-Type: application/json
+Content-Length: 52
+
+{
+  "error": "the request body is not valid JSON"
+}
+
+===== HTTP 422 Unprocessable Content =====
+HTTP/1.1 422 Unprocessable Entity
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:42:17 GMT
+Content-Type: application/json
+Content-Length: 57
+
+{
+  "error": "id must be a VLAN number from 1 to 4094"
+}
+
+===== HTTP 409 Conflict =====
+HTTP/1.1 409 Conflict
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:43:04 GMT
+Content-Type: application/json
+Content-Length: 63
+
+{
+  "error": "VLAN 10 already exists: use PUT to replace it"
+}
+
+===== HTTP 403 Forbidden =====
+HTTP/1.1 403 Forbidden
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:06 GMT
+Content-Type: application/json
+Content-Length: 46
+
+{
+  "error": "viewer has a read-only token"
+}
+
+===== HTTP 429 Too Many Requests =====
+HTTP/1.1 200 OK
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:58 GMT
+Content-Type: application/json
+Content-Length: 247
+
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "default"
+    },
+    {
+      "id": 10,
+      "name": "users"
+    },
+    {
+      "id": 20,
+      "name": "servers"
+    },
+    {
+      "id": 99,
+      "name": "old-guest"
+    }
+  ],
+  "next": null
+}
+HTTP/1.1 200 OK
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:58 GMT
+Content-Type: application/json
+Content-Length: 247
+
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "default"
+    },
+    {
+      "id": 10,
+      "name": "users"
+    },
+    {
+      "id": 20,
+      "name": "servers"
+    },
+    {
+      "id": 99,
+      "name": "old-guest"
+    }
+  ],
+  "next": null
+}
+HTTP/1.1 200 OK
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:58 GMT
+Content-Type: application/json
+Content-Length: 247
+
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "default"
+    },
+    {
+      "id": 10,
+      "name": "users"
+    },
+    {
+      "id": 20,
+      "name": "servers"
+    },
+    {
+      "id": 99,
+      "name": "old-guest"
+    }
+  ],
+  "next": null
+}
+HTTP/1.1 200 OK
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:58 GMT
+Content-Type: application/json
+Content-Length: 247
+
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "default"
+    },
+    {
+      "id": 10,
+      "name": "users"
+    },
+    {
+      "id": 20,
+      "name": "servers"
+    },
+    {
+      "id": 99,
+      "name": "old-guest"
+    }
+  ],
+  "next": null
+}
+HTTP/1.1 200 OK
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:58 GMT
+Content-Type: application/json
+Content-Length: 247
+
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "default"
+    },
+    {
+      "id": 10,
+      "name": "users"
+    },
+    {
+      "id": 20,
+      "name": "servers"
+    },
+    {
+      "id": 99,
+      "name": "old-guest"
+    }
+  ],
+  "next": null
+}
+HTTP/1.1 429 Too Many Requests
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:58 GMT
+Content-Type: application/json
+Content-Length: 55
+Retry-After: 1
+
+{
+  "error": "too many requests: at most 5 a second"
+}
+HTTP/1.1 429 Too Many Requests
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:58 GMT
+Content-Type: application/json
+Content-Length: 55
+Retry-After: 1
+
+{
+  "error": "too many requests: at most 5 a second"
+}
+HTTP/1.1 429 Too Many Requests
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:58 GMT
+Content-Type: application/json
+Content-Length: 55
+Retry-After: 1
+
+{
+  "error": "too many requests: at most 5 a second"
+}
+HTTP/1.1 200 OK
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:58 GMT
+Content-Type: application/json
+Content-Length: 247
+
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "default"
+    },
+    {
+      "id": 10,
+      "name": "users"
+    },
+    {
+      "id": 20,
+      "name": "servers"
+    },
+    {
+      "id": 99,
+      "name": "old-guest"
+    }
+  ],
+  "next": null
+}
+HTTP/1.1 429 Too Many Requests
+Server: labapi/1.0 Python/3.12.16
+Date: Sat, 21 Nov 2026 14:44:58 GMT
+Content-Type: application/json
+Content-Length: 55
+Retry-After: 1
+
+{
+  "error": "too many requests: at most 5 a second"
+}

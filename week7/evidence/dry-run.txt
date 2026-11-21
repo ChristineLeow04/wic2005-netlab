@@ -1,0 +1,75 @@
+WIC2005 Week 7 - API Synchronization
+Student ID suffix: 4965
+VLANs in intent: 6
+ACL entries in intent: 5
+Dry-run mode: True
+
+Reading current API configuration...
+logged in as netops
+Found 4 existing VLANs
+Found 0 existing ACL entries
+
+Current VLANs:
+  VLAN 1: default
+  VLAN 10: users
+  VLAN 20: servers
+  VLAN 99: old-guest
+
+Current ACL entries:
+  No existing ACL entries.
+
+Synchronization plan:
+  1. ('update_vlan', 10, 'students')
+  2. ('create_vlan', 30, 'guests')
+  3. ('create_vlan', 40, 'lecturers')
+  4. ('create_vlan', 50, 'admin')
+  5. ('create_vlan', 60, 'research')
+  6. ('delete_vlan', 99)
+  7. ('create_acl', {'action': 'deny', 'src': '10.65.30.0/24', 'dst': '10.65.20.0/24', 'protocol': 'tcp', 'port': 22, 'description': 'guests-no-ssh'})
+  8. ('create_acl', {'action': 'permit', 'src': '10.65.10.0/24', 'dst': '10.65.20.0/24', 'protocol': 'tcp', 'port': 443, 'description': 'students-https'})
+  9. ('create_acl', {'action': 'permit', 'src': '10.65.40.0/24', 'dst': '10.65.20.0/24', 'protocol': 'tcp', 'port': 22, 'description': 'lecturers-ssh'})
+  10. ('create_acl', {'action': 'deny', 'src': '10.65.30.0/24', 'dst': '10.65.50.0/24', 'protocol': 'tcp', 'port': 3389, 'description': 'guests-no-rdp'})
+  11. ('create_acl', {'action': 'permit', 'src': '10.65.60.0/24', 'dst': '10.65.20.0/24', 'protocol': 'tcp', 'port': 443, 'description': 'research-https'})
+
+Total planned changes: 11
+DRY RUN: No changes applied.
+WIC2005 Week 7 - API Synchronization
+Student ID suffix: 4965
+VLANs in intent: 6
+ACL entries in intent: 5
+Dry-run mode: True
+
+Reading current API configuration...
+logged in as netops
+Found 4 existing VLANs
+Found 0 existing ACL entries
+
+Current VLANs:
+  VLAN 1: default
+  VLAN 10: users
+  VLAN 20: servers
+  VLAN 99: old-guest
+
+Current ACL entries:
+  No existing ACL entries.
+
+Synchronization plan:
+  1. ('update_vlan', 10, 'students')
+  2. ('create_vlan', 30, 'guests')
+  3. ('create_vlan', 40, 'lecturers')
+  4. ('create_vlan', 50, 'admin')
+  5. ('create_vlan', 60, 'research')
+  6. ('delete_vlan', 99)
+  7. ('create_acl', {'action': 'deny', 'src': '10.65.30.0/24', 'dst': '10.65.20.0/24', 'protocol': 'tcp', 'port': 22, 'description': 'guests-no-ssh'})
+  8. ('create_acl', {'action': 'permit', 'src': '10.65.10.0/24', 'dst': '10.65.20.0/24', 'protocol': 'tcp', 'port': 443, 'description': 'students-https'})
+  9. ('create_acl', {'action': 'permit', 'src': '10.65.40.0/24', 'dst': '10.65.20.0/24', 'protocol': 'tcp', 'port': 22, 'description': 'lecturers-ssh'})
+  10. ('create_acl', {'action': 'deny', 'src': '10.65.30.0/24', 'dst': '10.65.50.0/24', 'protocol': 'tcp', 'port': 3389, 'description': 'guests-no-rdp'})
+  11. ('create_acl', {'action': 'permit', 'src': '10.65.60.0/24', 'dst': '10.65.20.0/24', 'protocol': 'tcp', 'port': 443, 'description': 'research-https'})
+
+Total planned changes: 11
+DRY RUN: No changes applied.
+===== AUDIT AFTER DRY RUN =====
+{
+  "writes": 0,
+  "items": []
+}
